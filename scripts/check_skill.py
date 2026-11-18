@@ -12,6 +12,79 @@ def slug(text):
     return re.sub(r"[^\w\s-]", "", text).replace(" ", "-")
 
 
+def metadata_scalar(first, continuation):
+    """Read the simple string scalars used by generated interface metadata.
+
+    This intentionally does not parse arbitrary YAML or resolve tags/aliases.
+    Reconciliation can remove quotes and wrap a plain string onto indented lines.
+    """
+    if first in {">", ">-", ">+", "|", "|-", "|+"}:
+        separator = "\n" if first.startswith("|") else " "
+        return separator.join(continuation).strip()
+    value = " ".join([first] + continuation).strip()
+    if value.startswith('"'):
+        match = re.fullmatch(r'("(?:[^"\\]|\\.)*")\s*(?:#.*)?', value)
+        if not match:
+            raise ValueError("Invalid quoted string")
+        return json.loads(match.group(1))
+    if value.startswith("'"):
+        match = re.fullmatch(r"'((?:[^']|'')*)'\s*(?:#.*)?", value)
+        if not match:
+            raise ValueError("Invalid quoted string")
+        return match.group(1).replace("''", "'")
+    value = re.split(r"\s+#", value, maxsplit=1)[0].strip()
+    if (not value or value[0] in "[{&*!?|>%@`" or ": " in value
+            or value.lower() in {"true", "false", "null", "yes", "no", "on", "off", "~", ".nan", ".inf", "-.inf", "+.inf"}
+            or re.fullmatch(r"[-+]?(?:\d[\d_]*(?:\.[\d_]*)?|\.\d+)(?:[eE][-+]?\d+)?", value)):
+        raise ValueError("Expected a nonempty string")
+    return value
+
+
+def agent_metadata_errors(metadata, skill_name):
+    """Validate required interface values without depending on YAML formatting."""
+    lines = metadata.splitlines()
+    starts = [i for i, line in enumerate(lines) if re.fullmatch(r"interface:\s*(?:#.*)?", line)]
+    if len(starts) != 1:
+        return ["Agent metadata needs one top-level interface mapping"]
+    block = []
+    for line in lines[starts[0] + 1:]:
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        if not line.startswith(" "):
+            break
+        block.append(line)
+    depth = min((len(line) - len(line.lstrip()) for line in block), default=0)
+    required = {"display_name", "short_description", "default_prompt"}
+    values, errors = {}, []
+    for i, line in enumerate(block):
+        match = re.fullmatch(r"( +)([a-z_]+):\s*(.*)", line)
+        if not match or len(match.group(1)) != depth or match.group(2) not in required:
+            continue
+        key, first = match.group(2), match.group(3)
+        if key in values:
+            errors.append("Duplicate agent interface field: " + key)
+            continue
+        continuation = []
+        for following in block[i + 1:]:
+            if len(following) - len(following.lstrip()) <= depth:
+                break
+            continuation.append(following.strip())
+        try:
+            values[key] = metadata_scalar(first, continuation)
+        except ValueError:
+            values[key] = ""
+            errors.append("Agent interface field must be a valid string: " + key)
+    for key in sorted(required):
+        if not values.get(key, "").strip():
+            errors.append("Missing nonempty agent interface field: " + key)
+    description = values.get("short_description", "")
+    if description and not 25 <= len(description) <= 64:
+        errors.append("Agent short_description must be 25 to 64 characters")
+    if not re.search(re.escape("$" + skill_name) + r"(?![a-z0-9-])", values.get("default_prompt", "")):
+        errors.append("Agent default_prompt must name this skill")
+    return errors
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("root", nargs="?", default=str(Path(__file__).resolve().parent.parent))
@@ -51,11 +124,7 @@ def main():
     metadata_path = root / "agents/openai.yaml"
     if metadata_path.is_file():
         metadata = metadata_path.read_text(encoding="utf-8")
-        if "$" + name not in metadata:
-            errors.append("Agent default_prompt must name this skill")
-        for key in ("display_name", "short_description", "default_prompt"):
-            if not re.search(r'^\s+' + key + r': ".+"$', metadata, re.M):
-                errors.append("Missing quoted agent interface field: " + key)
+        errors.extend(agent_metadata_errors(metadata, name))
 
     markdown = sorted(root.glob("*.md")) + sorted((root / "references").glob("*.md"))
     for path in markdown:

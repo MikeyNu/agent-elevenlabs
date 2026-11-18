@@ -4,7 +4,7 @@ Date: **18 November 2026**.
 
 ## Scope and result
 
-The installable skill was assessed through source review, local structural checks, 34 deterministic Python tests, and twelve production-style tasks given to three independent agents with fresh context. One streaming task initially exposed an incomplete reference. The reference was expanded and a fourth fresh agent completed a targeted streaming task from the updated skill.
+The installable skill was assessed through source review, local structural checks, 41 deterministic Python tests, and twelve production-style tasks given to three independent agents with fresh context. One streaming task initially exposed an incomplete reference. The reference was expanded and a fourth fresh agent completed a targeted streaming task from the updated skill.
 
 All twelve task areas met the critical criteria after that revision. This is a qualitative assessment of skill-following behavior, not a statistical benchmark or a guarantee of future results. The agents were given the skill path and practical user requests, without expected answers or the research conversation. The reusable task set is in [scenarios.json](scenarios.json).
 
@@ -37,8 +37,9 @@ No paid audio was generated. No live agents, calls, or customer tools were chang
 5. Added the reference's selected-voice placeholder to preflight rejection cases.
 6. Checked actual dialogue `future_text` as well as the planning alias, with a conflict error when both are supplied.
 7. Added a surface-verification warning for legacy Speaker Boost rather than asserting universal compatibility.
+8. Fixed the structure checker to accept valid unquoted and wrapped interface strings produced by installation, while retaining required-field, skill-reference, and description-length checks.
 
-The regression suite increased from 30 to 34 test methods. Multiple methods contain boundary and malformed-input subcases.
+The speech preflight regression suite increased from 30 to 34 test methods. Seven metadata regression cases brought the complete suite to 41 test methods. Multiple methods contain boundary and malformed-input subcases.
 
 ## Reproducible offline checks
 
@@ -47,9 +48,13 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s scripts -p 'test_speec
 python3 scripts/check_skill.py .
 ```
 
-The first command passed all 34 tests. The second passed frontmatter, required files, local Markdown paths/heading links, metadata, entrypoint size, and punctuation checks. The skill-creator validator also passed against the installable skill directory. `SKILL.md` contains 93 lines and 1,230 whitespace-separated words at this snapshot. The main workflow routes agents to nine optional references.
+The first command passed all 41 tests. The second passed frontmatter, required files, local Markdown paths/heading links, metadata, entrypoint size, and punctuation checks against both the repository and installed skill. The skill-creator validator also passed against the installed skill directory. `SKILL.md` contains 93 lines and 1,230 whitespace-separated words at this snapshot. The main workflow routes agents to nine optional references.
 
 The workflow in [.github/workflows/validate.yml](../.github/workflows/validate.yml) runs the two repository-local commands on pushes and pull requests. It does not run paid synthesis or replace listening QA. Normal commit messages preserve configured CI execution.
+
+## Publication verification
+
+The skill and supporting files were published to the repository's `main` branch and the installed skill was verified after installation. GitHub created the validation workflow, but the [first run](https://github.com/MikeyNu/agent-elevenlabs/actions/runs/44320906565) did not execute any steps. Its annotation states that the job could not start because the account is locked due to a billing issue. This is an account-level CI blocker, not a failed local validation result. The workflow remains enabled. A successful hosted CI run is not claimed.
 
 ## Research evidence and limits
 

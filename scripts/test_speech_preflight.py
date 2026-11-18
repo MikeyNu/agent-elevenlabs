@@ -7,6 +7,7 @@ import sys
 import unittest
 from pathlib import Path
 
+from check_skill import agent_metadata_errors
 from speech_preflight import validate_job
 
 
@@ -214,6 +215,66 @@ class SpeechPreflightTests(unittest.TestCase):
             result = json.loads(run.stdout)
             self.assertEqual(result["ok"], status == 0)
             self.assertNotIn("private123", run.stdout + run.stderr)
+
+
+class AgentMetadataTests(unittest.TestCase):
+    name = "elevenlabs-speech"
+    metadata = (
+        'interface:\n'
+        '  display_name: "ElevenLabs Speech"\n'
+        '  short_description: "Direct natural speech and responsive voice agents"\n'
+        '  default_prompt: "Use $elevenlabs-speech to prepare natural audio."\n'
+    )
+
+    def test_quoted_and_reconciled_plain_wrapped_values(self):
+        reconciled = (
+            "interface:\n"
+            "  display_name: ElevenLabs Speech\n"
+            "  short_description: Direct natural speech and responsive voice agents\n"
+            "  default_prompt: Use $elevenlabs-speech to prepare\n"
+            "    natural audio.\n"
+            "  icon_small: assets/icon.svg\n"
+            "policy:\n"
+            "  products:\n"
+            "  - chatgpt\n"
+        )
+        for metadata in (self.metadata, reconciled):
+            self.assertEqual(agent_metadata_errors(metadata, self.name), [])
+
+    def test_single_quoted_values_and_inline_comments(self):
+        metadata = self.metadata.replace('"', "'").replace(
+            "'ElevenLabs Speech'", "'ElevenLabs Speech' # display label")
+        self.assertEqual(agent_metadata_errors(metadata, self.name), [])
+
+    def test_folded_and_literal_prompt_values(self):
+        for marker in (">-", "|"):
+            metadata = self.metadata.replace(
+                '"Use $elevenlabs-speech to prepare natural audio."',
+                marker + "\n    Use $elevenlabs-speech to prepare\n    natural audio.")
+            self.assertEqual(agent_metadata_errors(metadata, self.name), [])
+
+    def test_reference_must_be_in_default_prompt_and_match_full_name(self):
+        metadata = self.metadata.replace("$elevenlabs-speech", "$elevenlabs-speech-extra")
+        metadata += "# $elevenlabs-speech is elsewhere\n"
+        self.assertIn("Agent default_prompt must name this skill", agent_metadata_errors(metadata, self.name))
+
+    def test_non_string_empty_and_malformed_values_fail(self):
+        for scalar in ("true", "123", "[]", "{}", "null", "''", '"unfinished'):
+            metadata = self.metadata.replace('"ElevenLabs Speech"', scalar)
+            with self.subTest(scalar=scalar):
+                self.assertTrue(agent_metadata_errors(metadata, self.name))
+
+    def test_required_values_are_scoped_to_interface(self):
+        self.assertTrue(agent_metadata_errors(self.metadata.replace("interface:", "other:"), self.name))
+        missing = self.metadata.replace('  display_name: "ElevenLabs Speech"\n', "")
+        self.assertIn("Missing nonempty agent interface field: display_name", agent_metadata_errors(missing, self.name))
+
+    def test_duplicate_fields_and_description_length_fail(self):
+        duplicate = self.metadata + '  display_name: "Another name"\n'
+        self.assertIn("Duplicate agent interface field: display_name", agent_metadata_errors(duplicate, self.name))
+        for description in ("Short", "a" * 65):
+            metadata = self.metadata.replace("Direct natural speech and responsive voice agents", description)
+            self.assertIn("Agent short_description must be 25 to 64 characters", agent_metadata_errors(metadata, self.name))
 
 
 if __name__ == "__main__":
