@@ -1,6 +1,6 @@
 # Evidence and maintenance
 
-Research snapshot: **18 November 2026**. Keep this reference out of routine task context unless refreshing or resolving conflicting claims. The skill combines paraphrased vendor capabilities with original writing, integration, and evaluation recommendations. Example scripts are original and hypothetical.
+Research snapshot: **18 November 2026**. Keep this reference out of routine task context unless refreshing or resolving conflicting claims. The skill combines paraphrased vendor capabilities, labelled firsthand community reports, and original writing, integration, and evaluation recommendations. Example scripts are original and hypothetical.
 
 ## Refresh narrowly
 
@@ -21,8 +21,11 @@ Thirty days is a maintenance heuristic, not an official expiry period. A request
 | Which field name or limit belongs here? | That endpoint or tool schema |
 | Can this account use it? | Actual account catalog or authorized request |
 | Does it sound right? | The generated audio, heard in the intended context |
+| Which practitioner technique is worth trying? | Firsthand report with model, inputs, outcomes, and limitations; then a project-specific audition |
 
 If current sources still disagree, preserve the uncertainty. Choose a documented common path or perform a small scoped check. Do not make a broad assertion from one older example.
+
+The [community register](community-practice.md#source-register) records independent blogs, Reddit, LinkedIn, and a public developer issue. Keep experience reports separate from capability documentation. Mark unknown models, affiliate or product interests, missing audio, selected-take bias, and later corrections. Do not adopt a social-media recipe from popularity or a search excerpt alone.
 
 ## Known documentation conflicts
 

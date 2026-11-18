@@ -66,6 +66,16 @@
       "id": "R1",
       "prompt": "Prepare single-voice Eleven v4 Turbo streaming from a server. A valid voice is already in voice_id and the utterance is in text. Give endpoint/query, concrete outbound objects, receive/finalization logic, and interruption handling without remote calls.",
       "critical_criteria": ["Header authentication", "voices registration", "inputs frame using supplied variables", "flush, keep_alive, close_socket", "Decode audio and handle error/is_final", "Drain normal completion and discard interrupted playback", "No invented cancellation field"]
+    },
+    {
+      "id": "B1",
+      "prompt": "Prepare an Eleven v4 voiceover job using an existing approved voice and these exact words: The release is scheduled for Friday. Testing is still in progress. We will confirm the time tomorrow. A creator recipe recommends stability 35%, similarity 75%, a tag on every sentence, and speeding the export up 20%. Another creator reports heavy tagging caused repeated text. Prepare actual candidate text, a small comparison, and acceptance criteria for a natural, restrained result. Explain what can be concluded before listening. Use the bundled skill only; do not generate audio or browse.",
+      "critical_criteria": ["Preserve exact spoken wording", "Keep saved voice settings for a controlled baseline", "Treat numeric recipes and tag counts as hypotheses", "Separate postproduction acceleration from v4 generation controls", "Do not infer causality from an uncontrolled report", "Give concrete candidates and listening acceptance checks without claiming an audible winner"]
+    },
+    {
+      "id": "B2",
+      "prompt": "A custom app normally uses v4 Turbo and has an approved Flash v2.5 fallback. Canonical captions must preserve: Your locker is [B-17]. Primary text arrives in chunks: '[whis', 'pers] Your locker is [B-', '17].' During failure, the fallback should finish what was not delivered. Prepare transformation/playback policy, expected fallback and caption outputs, handling for a stream ending with an unfinished cue, and manual acceptance checks. Use the bundled skill only; do not make API calls, generate audio, browse, or write files.",
+      "critical_criteria": ["Remove only the known performance cue, across chunk boundaries", "Preserve literal bracketed identifier and canonical captions", "Distinguish received or generated text from confirmed playback", "Resume from a defensible delivered-content checkpoint and reject stale frames", "State uncertainty when midword playback cannot be mapped reliably", "Bound incomplete-markup handling without leaking cues, deleting content, or hanging"]
     }
   ]
 }

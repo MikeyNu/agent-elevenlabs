@@ -48,7 +48,7 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s scripts -p 'test_speec
 python3 scripts/check_skill.py .
 ```
 
-The first command passed all 41 tests. The second passed frontmatter, required files, local Markdown paths/heading links, metadata, entrypoint size, and punctuation checks against both the repository and installed skill. The skill-creator validator also passed against the installed skill directory. `SKILL.md` contains 93 lines and 1,230 whitespace-separated words at this snapshot. The main workflow routes agents to nine optional references.
+The first command passed all 41 tests. The second passed frontmatter, required files, local Markdown paths/heading links, metadata, entrypoint size, and punctuation checks against both the repository and installed skill. The skill-creator validator also passed against the installed skill directory. In the initial assessed snapshot, `SKILL.md` contained 93 lines and 1,230 whitespace-separated words and routed agents to nine optional references. The community extension below records the updated size.
 
 The workflow in [.github/workflows/validate.yml](../.github/workflows/validate.yml) runs the two repository-local commands on pushes and pull requests. It does not run paid synthesis or replace listening QA. Normal commit messages preserve configured CI execution.
 
@@ -63,3 +63,20 @@ The skill cites 46 distinct official ElevenLabs URLs and records model-specific 
 The references record the verified date and a narrow refresh policy. A direct automated HEAD probe of external URLs returned 403 responses, so it was inconclusive as a link-health test; source research used web retrieval and the official connector. No claim is made that all external URLs were independently HTTP-health-checked. Internal paths and headings were checked locally.
 
 No exact token-savings percentage is asserted. The intended saving comes from the small entrypoint, on-demand references, retained decisions, and reusable offline checks. Future model changes still require focused verification when relevant.
+
+## Community research extension
+
+Completed on 18 November 2026 after the user asked about methods reported by other creators. The initial research prioritized vendor documentation and ElevenLabs' own blog. This extension reviewed firsthand practitioner material and added [community-practice.md](../references/community-practice.md) with fourteen curated sources: seven creator/developer articles, four Reddit discussions, two LinkedIn showcases, and one public SDK issue with a confirmed resolution.
+
+The register records model, date where recoverable, claimed result, accessible evidence, commercial interests, and transfer limits. Relative social timestamps remain approximate. Linked audio/video was not auditioned. A source's claimed success is not presented as an independently reproduced result. Suggestions, demonstrations, comparisons, and confirmed fixes remain distinct. Unavailable-page snippets and generic promotional reposts did not establish techniques.
+
+The extension adds a controlled audition method for conflicting recipes, conditional handling for a historical trailing-context workaround, and guidance for preserving literal bracketed content when a configured speech fallback cannot perform audio tags. It strengthens checks for client playback and time to useful spoken content. It does not adopt universal slider values, tag counts, whisper quotas, speed percentages, or a claim that community reports prove one best narration method.
+
+Two new agents with fresh context received practical tasks and the installed skill path, without expected answers, web research, or the prior research conversation. The skill folder did not contain the assessment criteria. Neither agent generated audio or changed a live system.
+
+| ID | Task | Observed behavior | Outcome |
+|---|---|---|---|
+| B1 | Exact-wording restrained v4 narration with a 35%/75%, every-sentence-tag, 20%-acceleration recipe and a conflicting repetition report | Preserved all words; produced plain and directed candidates; held voice/settings constant; treated the recipe and repetition claim as hypotheses; separated export acceleration from generation controls; left sound judgments unassessed | Pass for evidence use and audition planning |
+| B2 | v4 Turbo to approved Flash fallback with split performance markup and a literal bracketed locker identifier | Removed the known cue across chunks, preserved the identifier/caption, separated text received from audio played, used a playback checkpoint for the remaining suffix, handled incomplete cues and literal fragments, and disclosed midword-resumption uncertainty | Pass for integration reasoning; runtime not exercised |
+
+The reusable prompts and criteria are appended to [scenarios.json](scenarios.json). All 41 existing regression tests still pass. Structure/link checks and the skill-creator validator pass against the updated installed skill. No executable synthesis or parsing code was added in this extension. The entrypoint is now **96 lines and 1,284 words**, with **ten optional references**. Repository and installed content are checked for agreement when saving. Hosted CI remains a separate verification step from these local results.

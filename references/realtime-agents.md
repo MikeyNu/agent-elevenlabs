@@ -9,6 +9,7 @@ Verified: 2026-11-18. Treat the examples below as starting points to audition, n
 - [Separate instructions from speech](#separate-instructions-from-speech)
 - [Control expression and turn timing](#control-expression-and-turn-timing)
 - [Handle languages and pronunciation](#handle-languages-and-pronunciation)
+- [Handle cues across output surfaces](#handle-cues-across-output-surfaces)
 - [Verify audible behavior](#verify-audible-behavior)
 - [Resolve documentation drift](#resolve-documentation-drift)
 
@@ -94,6 +95,12 @@ Configure supported languages and appropriate voices explicitly. Enable `languag
 
 The dedicated dictionary guide currently documents phoneme support for v4, v4 Turbo, v3, and Flash v2. Other models need aliases. Pin dictionary versions, handle case-sensitive entries, and audition with the chosen voice and language. Model language coverage and a particular agent's configured languages are separate constraints. [Source: Pronunciation dictionaries](https://elevenlabs.io/docs/eleven-agents/customization/voice/pronunciation-dictionary)
 
+## Handle cues across output surfaces
+
+For a configured, approved fallback, adapt the text to that engine's cue support before synthesis. Keep performance cues separate from visible captions and ordinary spoken text. Buffer incomplete cues across stream chunks; a prompt change alone cannot clean already queued text. [Practitioner evidence and limits: C9](community-practice.md#source-register)
+
+Preserve literal brackets in identifiers, quotations, and other approved content. Prefer structured speech/cue segments when the pipeline permits them. If parsing tagged text, recognize only the agreed cue syntax and distinguish it from literal content; never strip every bracketed span. Define a bounded failure path for malformed or unfinished markup, so it cannot hang the stream, swallow words, or leak as unintended speech. Track delivered text before resuming after failure and avoid duplicate playback.
+
 ## Verify audible behavior
 
 Use [troubleshooting-qa.md](troubleshooting-qa.md) for scoring. Check actual audio for a greeting, frustrated caller, slowly spelled identifier, interruption, thinking pause, delayed tool, and language switch. Test that a quiet acknowledgment does not incorrectly cancel useful speech. Compare source facts, transcript, and audio after interrupted turns.
@@ -101,6 +108,8 @@ Use [troubleshooting-qa.md](troubleshooting-qa.md) for scoring. Check actual aud
 Use Next Reply, Tool Call, and Simulation tests for behavior. Mock external tools and select error fallback where unintended real calls must be prevented. Inspect all tools because system/workflow tools are not mocked. Repeat unstable scenarios; a transcript pass does not prove natural prosody. [Source: Agent Testing](https://elevenlabs.io/docs/eleven-agents/customization/agent-testing)
 
 Measure end-of-user-speech to audible playback in the actual application. Published TTS latency medians exclude network and application overhead. [Source: Latency methodology](https://elevenlabs.io/docs/eleven-api/concepts/latency-methodology)
+
+Record time to the first useful content separately if filler or acknowledgment audio starts sooner. Also test first-message playback on representative devices: a transcript and speaking event can exist while a client fails to play audio. [Community examples C9-C12](community-practice.md#source-register) provide diagnostic cases, not current-model performance guarantees.
 
 ## Resolve documentation drift
 

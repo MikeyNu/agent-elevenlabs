@@ -25,6 +25,8 @@ Use symptoms and evidence to choose the smallest repair. The thresholds and work
 | Abrupt start or cut-off ending | Script boundaries, response completion, route budget | Consume full output, reduce overloaded request, preserve all final words |
 | Good transcript, unnatural delivery | Listening evidence | Listen and redraft/revoice; transcription cannot assess every performance issue |
 | Agent interrupts or talks over a correction | Turn policy and stale playback | Fix interaction controls and queue cancellation, then retest live |
+| Tags spoken after a fallback | Backup model support and streamed cue parsing | Adapt cues before backup synthesis; preserve literal bracketed content |
+| Greeting exists in transcript but is silent | Actual device playback, SDK and connection state | Reproduce the client issue before retuning the voice |
 
 The vendor's [troubleshooting guide](https://elevenlabs.io/docs/eleven-creative/troubleshooting) discusses mispronunciation, unstable style settings, and degraded long generations. Its sub-800-character suggestion is a recovery tactic, not a universal v4 limit. The [emotion guidance](https://elevenlabs.io/docs/help-center/product/core-capabilities/text-to-speech/how-to-produce-emotions) supports experimenting with context and delivery rather than assuming one setting guarantees emotion.
 
@@ -74,6 +76,8 @@ If generation or listening is unavailable, deliver a usable script/configuration
 5. Check the repaired boundaries and final export.
 
 Keep a baseline and a small candidate set. After repeated failures, change the voice/route or request a missing pronunciation/performance reference. Do not keep lowering stability, adding cues, or spending credits without a hypothesis. Once the result meets the brief and checks, stop optional experimentation.
+
+Use the [community audition protocol](community-practice.md#keep-the-comparison-interpretable) to assess a reported trick. Record all attempted takes, not only the winner, and identify changed variables. A comparison that changes both model and markup cannot establish the effect of tags alone. Check whether an old issue was subsequently resolved before carrying its workaround forward.
 
 Suggested delivery note:
 

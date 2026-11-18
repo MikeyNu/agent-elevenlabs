@@ -82,3 +82,5 @@ Do not use unsupported speed controls on v4. A mood change is not inherently a s
 Select an excerpt that exposes the hard parts, not a generic greeting. Compare candidates at comparable playback levels. First identify the failure: voice mismatch, awkward words, wrong emphasis, unreliable cue, or pronunciation. Change only that variable.
 
 Keep an accepted voice and pronunciation plan across episodes. Record which example worked and the relevant model/settings, without treating one seed or take as deterministic. When text cannot express the desired rhythm efficiently, use [a performed source](performance-alternatives.md) rather than escalating the cue count.
+
+When ordinary direction misses the brief, consult [community practice](community-practice.md). Compare direction density instead of assuming a universal count: plain text, a cue at a meaningful change, then brief line directions only if needed. Keep the spoken words fixed and judge emotion separately from naturalness. For an overacted take, examine unintended exclamation marks, full capitals, and repeated reactions before adding more cues. Source reports differ by voice, genre, and model.

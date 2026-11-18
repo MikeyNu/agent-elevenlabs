@@ -24,6 +24,7 @@ Do not repeat broad ElevenLabs research for each task. Use the bundled sources a
 | Robotic, distorted, misread, inconsistent, or cut-off audio | [Troubleshooting and QA](references/troubleshooting-qa.md) | Diagnosed cause, smallest effective repair, listening evidence |
 | Existing acted audio or translated performance | [Performance alternatives](references/performance-alternatives.md) | Voice Changer, Dubbing, or isolation workflow |
 | A concrete genre example | [Scenario recipes](references/scenarios.md) | Adapted pattern with facts and tone preserved |
+| Creator tips, forum recipes, or unresolved delivery problems | [Community practice](references/community-practice.md) | Evidence-labelled technique and a small controlled audition |
 
 Music-only, sound-effects-only, and transcription-only requests belong to those capabilities. Use them here when supporting a voice deliverable; do not treat their model IDs or controls as TTS settings.
 
@@ -79,6 +80,8 @@ Check character and speaker budgets, factual fidelity, pronunciation, supported 
 For a new voice or difficult delivery, generate a representative short excerpt within the task's budget. Include the hardest name, emotional transition, or language switch. Compare a plain baseline with one directed candidate when useful. For a very short deliverable, audition the deliverable itself.
 
 Listen before rendering a long piece. Change the smallest relevant variable, then compare. If two targeted revisions do not help, reassess voice suitability, source recording, model, or route instead of stacking more cues. Reuse accepted clips and repair only failing sections. Do not automatically resubmit an ambiguous timed-out paid request.
+
+Treat community recipes as model- and task-specific hypotheses. Compare their method against the same passage and voice before adopting it; do not copy slider values, tag quotas, or editing percentages as universal defaults.
 
 ### 6. Verify the result
 
