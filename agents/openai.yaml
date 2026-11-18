@@ -1,0 +1,4 @@
+interface:
+  display_name: "ElevenLabs Speech"
+  short_description: "Direct natural speech and responsive voice agents"
+  default_prompt: "Use $elevenlabs-speech to prepare and validate natural ElevenLabs audio with model-appropriate controls."

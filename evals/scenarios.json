@@ -1,0 +1,71 @@
+{
+  "snapshot_date": "2026-11-18",
+  "method": "Use fresh agent context with SKILL.md and task-local inputs only. Do not provide the critical criteria to the performing agent. Prepare plans without remote mutations or paid synthesis unless separately authorized. Assess outputs against the criteria afterwards.",
+  "cases": [
+    {
+      "id": "C1",
+      "prompt": "Prepare Eleven v4 speech for these exact words: Your total is R1,375.40. Your collection code is 001206. Your booking is on 04/05/2026. Keep the words and values, make it warm and slower with speed 0.85, and put exactly 625 milliseconds before the code.",
+      "critical_criteria": ["Preserve canonical values and wording", "Resolve ambiguous date before production", "Do not claim v4 speed control", "Measure/edit exact silence rather than promise a tag duration", "Do not claim listening"]
+    },
+    {
+      "id": "C2",
+      "prompt": "Make this fictional news update sound like an everyday person with energy and no cheesy phrases: The release has moved from Monday to Thursday. The developer says the final accessibility checks need three more days. Customers who preordered can request a refund. All approved facts are supplied.",
+      "critical_criteria": ["Preserve attribution and all facts", "No invented drama or guarantee", "Natural wording with restrained direction", "No automatic fillers"]
+    },
+    {
+      "id": "C3",
+      "prompt": "Prepare the same presenter for English, Afrikaans, isiZulu, and isiXhosa. A personal name's pronunciation is not supplied. Captions must keep standard spelling. Every language should keep exactly the English voice's accent.",
+      "critical_criteria": ["Do not infer isiXhosa support", "Use verified language identifiers", "Do not invent name pronunciation", "Separate canonical captions", "Flag cross-language accent limitation"]
+    },
+    {
+      "id": "C4",
+      "prompt": "Only this text exists, with no generated audio: [excited] We have the results. [long pause] Open the report. Is it production-ready and human-sounding? Prepare the best useful deliverable from what exists.",
+      "critical_criteria": ["Useful script and direction", "Pause is approximate", "No audio naturalness or listening claim", "No unsupported positive interpretation of results"]
+    },
+    {
+      "id": "P1",
+      "prompt": "Plan an 18,400-character v4 audiobook section using an established voice. One paragraph is accepted. Support a later middle repair and resume without repeated billing.",
+      "critical_criteria": ["Respect actual TTS budget", "Reuse accepted audio", "Complete-thought chunks", "Completed recent context IDs where supported", "Reconcile ambiguous paid requests", "Record all output-affecting inputs"]
+    },
+    {
+      "id": "P2",
+      "prompt": "A 6,600-character scene uses twelve actors. We planned one v4 Text to Dialogue request because v4 supports 10,000 characters. We also need a separate editable audio file per actor. Prepare a workable plan.",
+      "critical_criteria": ["Separate TTS and dialogue budgets", "Ten distinct voices limit", "No promised speaker stems", "Preserve all actors", "Use individually editable renders and timeline when needed"]
+    },
+    {
+      "id": "P3",
+      "prompt": "Migrate a legacy WebSocket at /v1/text-to-speech/VOICE/stream-input using text and voice_settings with speed 0.8 and style 0.7 to expressive v4 Turbo. Prepare the new protocol and completion handling without invented IDs.",
+      "critical_criteria": ["Correct dialogue WebSocket", "One registered Turbo voice", "Remove unsupported controls", "Concrete registration and input frames", "Consume final audio before completion", "Keep interruption separate"]
+    },
+    {
+      "id": "P4",
+      "prompt": "Raw pcm_24000 bytes were named final.wav. Seed 42 was described as guaranteeing identical future audio. A timeout occurred after audio began and the queue will immediately retry. Diagnose and repair each issue.",
+      "critical_criteria": ["Require proper PCM metadata/container", "Seed is best effort", "Reuse accepted file for exact repetition", "No blind replay after ambiguous timeout", "No partial audio promoted as complete"]
+    },
+    {
+      "id": "A1",
+      "prompt": "The dashboard shows Realtime Mini but the record stores tts.model_id eleven_flash_v2_5. We want v4 Turbo and to retain a chosen external LLM. Can we just change tts.model_id and expressive_mode? Preserve the existing agent.",
+      "critical_criteria": ["Managed settings are ignored", "Custom mode for explicit external LLM/TTS", "Preserve agent configuration", "No guessed writable mode fields", "Read back and test actual version"]
+    },
+    {
+      "id": "A2",
+      "prompt": "A booking agent cuts customers off while spelling email addresses and repeats Are you still there after give me a second. Prepare a calm system-prompt excerpt, a separate greeting, and the needed non-prompt changes. Booking tool names are unknown.",
+      "critical_criteria": ["Separate prompt and turn controls", "Patient/spelling handling", "Real skip_turn mechanism where enabled", "Preserve machine-readable email", "No invented booking tools"]
+    },
+    {
+      "id": "A3",
+      "prompt": "A custom player closes the generation context on correction but finishes old speech and shows the complete old caption. Users were promised 100ms total responses because of v4 Turbo's advertised figure. Prepare fixes and acceptance checks.",
+      "critical_criteria": ["Stop and clear local playback", "Reject stale audio and text", "Do not assume closure discards audio", "Correct delivered transcript", "Measure actual end-to-end latency"]
+    },
+    {
+      "id": "A4",
+      "prompt": "TTS cannot match an actor's exact timing. The intended clean performance is seven minutes and also needs a Spanish version. Recommend a route and what must be checked before claiming preservation.",
+      "critical_criteria": ["Use source performance and Voice Changer when appropriate", "Segments no longer than five minutes", "Dubbing for translation", "Verify languages and target voice", "Listen and measure rather than guarantee timing"]
+    },
+    {
+      "id": "R1",
+      "prompt": "Prepare single-voice Eleven v4 Turbo streaming from a server. A valid voice is already in voice_id and the utterance is in text. Give endpoint/query, concrete outbound objects, receive/finalization logic, and interruption handling without remote calls.",
+      "critical_criteria": ["Header authentication", "voices registration", "inputs frame using supplied variables", "flush, keep_alive, close_socket", "Decode audio and handle error/is_final", "Drain normal completion and discard interrupted playback", "No invented cancellation field"]
+    }
+  ]
+}
